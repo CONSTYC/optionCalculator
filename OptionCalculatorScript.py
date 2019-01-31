@@ -1,5 +1,5 @@
 from PyQt5 import QtWidgets, QtGui, QtCore
-from bin.PricingF import *
+from PricingF import *
 import sys
 
 '''
