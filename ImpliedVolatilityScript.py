@@ -51,7 +51,7 @@ class ImpliedVolatilityWindow(QtWidgets.QMainWindow):
 
         Input_Parameter_Text = [
             'Stike', 'Price', 'Rate',
-            'days', 'Dividend', 'Precision'
+            'Days', 'Dividend', 'Precision'
         ]
         self.strike = QtWidgets.QDoubleSpinBox()
         self.strike.setDecimals(2)

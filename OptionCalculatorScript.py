@@ -19,7 +19,7 @@ class OptionCalculatorWindow(QtWidgets.QMainWindow):
 
     def initUI(self):
         FontSize = 10
-        Font_Label = '微软雅黑'
+        Font_Label = 'Palatino Linotype'
 
         self.StatusBar = self.statusBar()
 
@@ -29,56 +29,56 @@ class OptionCalculatorWindow(QtWidgets.QMainWindow):
         self.setCentralWidget(Vanilla_Center)
 
         Input_Parameter_Text = [
-            '行权价', '市价', '波动率', '利率',
-            '年天数', '期限（天）', '股息率', 'BAW精度'
+            'Strike', 'Price', 'Volatility', 'Rate',
+            'Days', 'TTM', 'Dividend', 'Precision'
         ]
         self.strike = QtWidgets.QDoubleSpinBox()
         self.strike.setDecimals(2)
         self.strike.setMaximum(999999.99)
         self.strike.setSingleStep(0.01)
         self.strike.setValue(100)
-        self.strike.setStatusTip('输入行权价格')
+        self.strike.setStatusTip('Input strike price')
 
         self.price = QtWidgets.QDoubleSpinBox()
         self.price.setDecimals(2)
         self.price.setMaximum(999999.99)
         self.price.setSingleStep(0.01)
         self.price.setValue(100)
-        self.price.setStatusTip('输入当前市价')
+        self.price.setStatusTip('Input current price')
 
         self.vol = QtWidgets.QDoubleSpinBox()
         self.vol.setDecimals(4)
         self.vol.setSingleStep(0.0001)
         self.vol.setValue(0.2)
-        self.vol.setStatusTip('输入波动率')
+        self.vol.setStatusTip('Input current volatility')
 
         self.rate = QtWidgets.QDoubleSpinBox()
         self.rate.setDecimals(4)
         self.rate.setSingleStep(0.0001)
         self.rate.setValue(0.03)
-        self.rate.setStatusTip('输入无风险利率')
+        self.rate.setStatusTip('Input risk-free rate')
 
         self.ty = QtWidgets.QSpinBox()
         self.ty.setMaximum(366)
         self.ty.setValue(360)
-        self.ty.setStatusTip('输入一年的天数')
+        self.ty.setStatusTip('Input days per year')
 
         self.maturity = QtWidgets.QSpinBox()
         self.maturity.setMaximum(999999)
         self.maturity.setValue(30)
-        self.maturity.setStatusTip('输入期权期限')
+        self.maturity.setStatusTip('Input time to maturity')
 
         self.dividend = QtWidgets.QDoubleSpinBox()
         self.dividend.setDecimals(4)
         self.dividend.setSingleStep(0.0001)
         self.dividend.setValue(0.03)
-        self.dividend.setStatusTip('输入股息率')
+        self.dividend.setStatusTip('Input dividend rate')
 
         self.epsilon = QtWidgets.QDoubleSpinBox()
         self.epsilon.setDecimals(7)
         self.epsilon.setValue(0.00001)
         self.epsilon.setSingleStep(0.0000001)
-        self.epsilon.setStatusTip('输入BAW精度')
+        self.epsilon.setStatusTip('Input BAW precision (only for american options)')
 
         Input_Parameter = [
             self.strike, self.price, self.vol, self.rate,
@@ -107,10 +107,10 @@ class OptionCalculatorWindow(QtWidgets.QMainWindow):
             Bar_Label = QtWidgets.QLabel('|')
             grid.addWidget(Bar_Label, i, 2)
 
-        European_Label = QtWidgets.QLabel('欧式')
+        European_Label = QtWidgets.QLabel('European')
         European_Label.setFont(QtGui.QFont(Font_Label, FontSize, QtGui.QFont.Bold))
         grid.addWidget(European_Label, 0, 3)
-        American_Label = QtWidgets.QLabel('美式')
+        American_Label = QtWidgets.QLabel('American')
         American_Label.setFont(QtGui.QFont(Font_Label, FontSize, QtGui.QFont.Bold))
         grid.addWidget(American_Label, 0, 7)
 
@@ -139,7 +139,7 @@ class OptionCalculatorWindow(QtWidgets.QMainWindow):
         self.BAWPVega_Text = QtWidgets.QLabel(self.Put.Vega)
         self.BAWPTheta_Text = QtWidgets.QLabel(self.Put.Theta)
 
-        Option_Parameter_Name = ['BSM看涨', 'BSM看跌', 'BAW看涨', 'BAW看跌']
+        Option_Parameter_Name = ['BSM Call', 'BSM Put', 'BAW Call', 'BAW Put']
         Option_Widget = [
             self.BSMc_Text, self.BSMp_Text, self.BAWC_Text, self.BAWP_Text
         ]
@@ -159,7 +159,7 @@ class OptionCalculatorWindow(QtWidgets.QMainWindow):
             grid.addWidget(Option_Label_Blank, 1, 4 + i * 2)
             Option_Widget[i].setFont(QtGui.QFont(Font_Label, FontSize))
             Option_Widget[i].setAlignment(QtCore.Qt.AlignCenter)
-            Option_Widget[i].setStatusTip('相对报价为：0.00%')
+            Option_Widget[i].setStatusTip('Relative price：0.00%')
             grid.addWidget(Option_Widget[i], 1, 4 + i * 2)
             for j in range(len(Greeks_Parameter_Name)):
                 Greeks_Label = QtWidgets.QLabel(Greeks_Parameter_Name[j])
@@ -169,21 +169,21 @@ class OptionCalculatorWindow(QtWidgets.QMainWindow):
                 Greeks_Widget[i][j].setAlignment(QtCore.Qt.AlignCenter)
                 grid.addWidget(Greeks_Widget[i][j], j + 3, 4 + i * 2)
 
-        Calculate_Btn = QtWidgets.QPushButton('计算', self)
+        Calculate_Btn = QtWidgets.QPushButton('Compute', self)
         Calculate_Btn.setFont(QtGui.QFont(Font_Label, FontSize, QtGui.QFont.Bold))
-        Calculate_Btn.setStatusTip('计算')
+        Calculate_Btn.setStatusTip('Compute')
         Calculate_Btn.clicked.connect(self.OptionCalculate)
         grid.addWidget(Calculate_Btn, 7, 3, 1, 4)
 
-        Quit_Btn = QtWidgets.QPushButton('退出', self)
+        Quit_Btn = QtWidgets.QPushButton('Exit', self)
         Quit_Btn.setFont(QtGui.QFont(Font_Label, FontSize, QtGui.QFont.Bold))
-        Quit_Btn.setStatusTip('退出期权计算器')
+        Quit_Btn.setStatusTip('Exit option calculator')
         Quit_Btn.clicked.connect(self.close)
         grid.addWidget(Quit_Btn, 7, 7, 1, 4)
 
         # self.setFixedSize()
         self.move(400, 400)
-        self.setWindowTitle('香草期权计算器')
+        self.setWindowTitle('Vanilla Option calculator')
         # self.show()
 
     def OptionCalculate(self):
@@ -200,7 +200,7 @@ class OptionCalculatorWindow(QtWidgets.QMainWindow):
             self.call.Value = str(round(PricingBSM(K, F, sigma, r, T, q, 'call'), 4))
             self.BSMc_Text.setText(self.call.Value)
             self.BSMc_Text.setStatusTip(
-                '相对报价为：' + str(
+                'Relative price: ' + str(
                     round(float(self.call.Value) / float(self.price.text()), 4) * 100
                 ) + '%')
 
@@ -220,7 +220,7 @@ class OptionCalculatorWindow(QtWidgets.QMainWindow):
             self.put.Value = str(round(PricingBSM(K, F, sigma, r, T, q, 'put'), 4))
             self.BSMp_Text.setText(self.put.Value)
             self.BSMp_Text.setStatusTip(
-                '相对报价为：' + str(
+                'Relative price: ' + str(
                     round(float(self.put.Value) / float(self.price.text()), 4) * 100
                 ) + '%')
 
@@ -240,7 +240,7 @@ class OptionCalculatorWindow(QtWidgets.QMainWindow):
             self.Call.Value = str(round(PricingBAW(K, F, sigma, r, T, q, 'call', epsilon), 4))
             self.BAWC_Text.setText(self.Call.Value)
             self.BAWC_Text.setStatusTip(
-                '相对报价为：' + str(
+                'Relative price: ' + str(
                     round(float(self.Call.Value) / float(self.price.text()), 4) * 100
                 ) + '%')
 
@@ -281,7 +281,7 @@ class OptionCalculatorWindow(QtWidgets.QMainWindow):
             self.Put.Value = str(round(PricingBAW(K, F, sigma, r, T, q, 'put', epsilon), 4))
             self.BAWP_Text.setText(self.Put.Value)
             self.BAWP_Text.setStatusTip(
-                '相对报价为：' + str(
+                'Relative price: ' + str(
                     round(float(self.Put.Value) / float(self.price.text()), 4) * 100
                 ) + '%')
 
@@ -317,9 +317,9 @@ class OptionCalculatorWindow(QtWidgets.QMainWindow):
                 ) / (2 * d * T), 4
             ))
             self.BAWPTheta_Text.setText(self.Put.Theta)
-            self.StatusBar.showMessage('计算完成')
+            self.StatusBar.showMessage('Done')
         except:
-            self.StatusBar.showMessage('参数输入错误，请检查参数')
+            self.StatusBar.showMessage('Wrong parameters')
 
     def keyPressEvent(self, e):
         if e.key() == QtCore.Qt.Key_Escape:
