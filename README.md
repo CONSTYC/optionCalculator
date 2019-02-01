@@ -1,3 +1,3 @@
 # optionCalculator
-a calculator for vanilla options.
+a calculator for vanilla options.  
 UI based on PyQt5
